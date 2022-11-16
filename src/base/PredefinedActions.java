@@ -14,10 +14,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PredefinedActions {
-	
-	//*** To restrict the user for creating object
+
+	// *** To restrict the user for creating object
 	protected PredefinedActions() {
-		
+
 	}
 
 	protected static WebDriver driver;
@@ -97,12 +97,12 @@ public class PredefinedActions {
 		return element;
 
 	}
-	
-	//*** Wait
+
+	// *** Wait
 	protected boolean waitForVisibilityOfElement(WebElement e) {
 		try {
 			wait.until(ExpectedConditions.visibilityOf(e));
-		}catch(Exception exception) {
+		} catch (Exception exception) {
 			return false;
 		}
 		return true;
@@ -141,19 +141,31 @@ public class PredefinedActions {
 		scrollToElement(e);
 		return e.isDisplayed();
 	}
-	
+
 	protected void mouseHoverOnElement(WebElement e) {
 		actions.moveToElement(e).build().perform();
 	}
-	
-	protected List<String> getListOfWebElemetsText(List<WebElement> list){
+
+	protected List<String> getListOfWebElemetsText(List<WebElement> list) {
 		List<String> listOfElementText = new ArrayList<String>();
-		for(WebElement e: list) {
+		for (WebElement e : list) {
 			listOfElementText.add(e.getText());
 		}
 		return listOfElementText;
 	}
-	
+
+	protected String getElementText(WebElement e, boolean isWaitRequired) {
+		if (isWaitRequired)
+			waitForVisibilityOfElement(e);
+		String value = e.getText();
+
+		if (value.equals("")) {
+			value = e.getAttribute("value");
+		}
+		return value;
+
+	}
+
 	public String getPageTitle() {
 		return driver.getTitle();
 	}
