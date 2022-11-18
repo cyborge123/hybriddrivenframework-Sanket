@@ -3,7 +3,6 @@ package pages;
 import org.openqa.selenium.support.PageFactory;
 
 import base.PredefinedActions;
-import pages.DashboardPage.Menu;
 
 public class MyInfoPage extends PredefinedActions{
 	

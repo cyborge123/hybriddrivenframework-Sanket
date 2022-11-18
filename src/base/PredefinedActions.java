@@ -1,11 +1,16 @@
 package base;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -163,7 +168,33 @@ public class PredefinedActions {
 			value = e.getAttribute("value");
 		}
 		return value;
+	}
 
+	// *** Javascript mechanism for alternative methods to Java-Selenium
+
+	protected void clickUsingJS(WebElement ele) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeAsyncScript("arguments[0].click()", ele);
+	}
+
+	protected void sendKeyUsingJS(WebElement ele, String text) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeAsyncScript("arguments[0].value='" + text + "'", ele);
+	}
+
+	protected void markCheckBox(WebElement ele, boolean checkedOrUnchecked) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeAsyncScript("arguments[0].checked='" + checkedOrUnchecked + "'", ele);
+	}
+
+	public static void takesScreenshot(String testCaseName) {
+		TakesScreenshot ts = (TakesScreenshot) driver; // type casted because driver need capabilities to take snippet
+		File scrfile = ts.getScreenshotAs(OutputType.FILE); // Returns the file
+		try {
+			FileUtils.copyFile(scrfile, new File("./failedTestCases/" + testCaseName + ".jpg")); // where to copy file
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getPageTitle() {

@@ -123,13 +123,7 @@ public class DashboardPage extends PredefinedActions {
 		String locatorValue = String.format(menuLocator, menuText);
 		clickOnElement(getElement("xpath", locatorValue, true), false);
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

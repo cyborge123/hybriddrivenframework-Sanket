@@ -1,5 +1,6 @@
 package testscripts;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,7 @@ import pages.DashboardPage;
 public class DashboardTest extends TestBase {
 
 	@Test
-	public void verifyWidgetsCountAndText() {
+	public void verifyWidgetsCountAndText() throws IOException {
 
 		DashboardPage dashboardPage = new DashboardPage();
 
