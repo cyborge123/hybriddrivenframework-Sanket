@@ -15,7 +15,7 @@ public class PropertyFileOperations {
 		prop.load(inputStream);
 	}
 
-	public String getValue(String key) throws IOException {
+	public String getValue(String key) {
 		return prop.getProperty(key);
 	}
 }

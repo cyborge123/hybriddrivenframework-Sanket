@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -18,24 +17,27 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import constant.ConstantValue;
+import customexceptions.ElementNotEnabledException;
+
 public class PredefinedActions {
+
+	protected static WebDriver driver;
+	static WebDriverWait wait;
+	private static Actions actions;
 
 	// *** To restrict the user for creating object
 	protected PredefinedActions() {
 
 	}
 
-	protected static WebDriver driver;
-	static WebDriverWait wait;
-	private static Actions actions;
-
 	public static void start(String url) {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver_106.exe");
+		System.setProperty(ConstantValue.CHROMEDRIVERKEY, ConstantValue.CHROMEDRIVER);
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(url);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		wait = new WebDriverWait(driver, 60);
+		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		wait = new WebDriverWait(driver, ConstantValue.EXPLICITWAITTIME);
 		actions = new Actions(driver);
 	}
 
@@ -115,8 +117,11 @@ public class PredefinedActions {
 
 	// *** Send Keys method
 	protected void setText(WebElement e, String text) {
+		scrollToElement(e);
 		if (e.isEnabled())
 			e.sendKeys(text);
+		else
+			throw new ElementNotEnabledException(text + " can't be entered as ele,ent is not enabled");
 	}
 
 	// *** Overloaded Method
@@ -187,11 +192,15 @@ public class PredefinedActions {
 		js.executeAsyncScript("arguments[0].checked='" + checkedOrUnchecked + "'", ele);
 	}
 
-	public static void takesScreenshot(String testCaseName) {
+	public static void takesScreenshot(String testCaseScreenShotName) {
 		TakesScreenshot ts = (TakesScreenshot) driver; // type casted because driver need capabilities to take snippet
 		File scrfile = ts.getScreenshotAs(OutputType.FILE); // Returns the file
 		try {
-			FileUtils.copyFile(scrfile, new File("./failedTestCases/" + testCaseName + ".jpg")); // where to copy file
+			FileUtils.copyFile(scrfile,
+					new File(ConstantValue.SCREENSHOTLOCATION + testCaseScreenShotName + ConstantValue.SCREENSHOTEXT)); // where
+																														// to
+																														// copy
+																														// file
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

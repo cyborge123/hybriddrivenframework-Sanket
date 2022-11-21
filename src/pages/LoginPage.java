@@ -7,6 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 import base.PredefinedActions;
 
 public class LoginPage extends PredefinedActions {
+	
+	private static LoginPage loginPage;
 
 	@FindBy(id = "txtUsername")
 	private WebElement userNameElement;
@@ -27,8 +29,15 @@ public class LoginPage extends PredefinedActions {
 	private WebElement logo;
 	
 	//*** To give driver access to initialize elements and  find elements in constructor
-	public LoginPage() {
-		PageFactory.initElements(driver, this);
+	private LoginPage() {
+		
+	}
+	
+	public static LoginPage getObject() {
+		if(loginPage == null)
+			loginPage = new LoginPage();
+		PageFactory.initElements(driver, loginPage);
+		return loginPage;
 	}
 
 	public void login(String username, String password) {

@@ -22,7 +22,7 @@ public class ScreenShotDemo extends PredefinedActions{
 		String url = fileOperations.getValue("url");
 		PredefinedActions.start(url);
 
-		LoginPage loginPage = new LoginPage();
+		LoginPage loginPage = LoginPage.getObject();
 		loginPage.login(fileOperations.getValue("username"), fileOperations.getValue("password"));
 	}
 	

@@ -6,14 +6,24 @@ import base.PredefinedActions;
 
 public class MyInfoPage extends PredefinedActions{
 	
-	public MyInfoPage(){
-		PageFactory.initElements(driver, this);
+	private static MyInfoPage myInfoPage;
+	
+	private MyInfoPage(){
+		
 	}
 	
-	private String menuPagemenu = "//a[contains(test(),'%s')]";
+	private String menuPagemenu = "//a[contains(text(),'%s')]";
 	
 	
-	enum MyInfoMenu{
+	public static MyInfoPage getObject() {
+		if(myInfoPage == null)
+			myInfoPage = new MyInfoPage();
+		PageFactory.initElements(driver, myInfoPage);
+		return myInfoPage;
+			
+	}
+	
+	public enum MyInfoMenu{
 		PERSONALDETAILS("Personal Details"),
 		JOB("Job"),
 		SALARY("Salary"),

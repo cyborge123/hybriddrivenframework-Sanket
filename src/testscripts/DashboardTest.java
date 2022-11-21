@@ -16,7 +16,7 @@ public class DashboardTest extends TestBase {
 	@Test
 	public void verifyWidgetsCountAndText() throws IOException {
 
-		DashboardPage dashboardPage = new DashboardPage();
+		DashboardPage dashboardPage = DashboardPage.getObject();
 
 		System.out.println("VERIFY - Number of Widgets on Dashboard Page");
 		int totalWidgets = dashboardPage.getNumberOfWidgets();
@@ -37,8 +37,8 @@ public class DashboardTest extends TestBase {
 	}
 
 	@Test
-	public void verfiyProfileAboutContentTest() {
-		DashboardPage dashboardPage = new DashboardPage();
+	public void verfiyProfileAboutContentText() {
+		DashboardPage dashboardPage = DashboardPage.getObject();
 
 		System.out.println("STEP - Mouse hover on Profile and Click on Settings");
 		List<String> expectedProfileSettingOptions = new ArrayList<String>(Arrays.asList("Change Password", "About"));

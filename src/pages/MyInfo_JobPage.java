@@ -1,5 +1,5 @@
 package pages;
 
-public class MyInfo_JobPage extends MyInfoPage{
+public class MyInfo_JobPage {
 
 }
